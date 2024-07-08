@@ -1,20 +1,10 @@
-const { Router } = require('express');
-const order = require('../models/order');
-const Customer = require('../models/customer');
+const express = require('express');
+const { authenticate, authorize } = require('../middleware/authMiddleware');
+const { getOrder, getOrdersByUser } = require('../controllers/orderController');
 
+const router = express.Router();
 
-const orderRouter = Router();
+router.get('/:id', authenticate, authorize(['admin', 'customer']), getOrder);
+router.get('/user/:userId', authenticate, authorize(['admin', 'customer']), getOrdersByUser);
 
-orderRouter.get('./order/:customerId', async (req, res)=>{
-    try{
-    const orders = await order.findAll({
-        where :{CustomerId:req.params.customerId},
-        include : Customer
-    });
-    res.send(orders);
- }catch(err){
-    res.status(500).send(err);
- }
-});
-
-module.exports = orderRouter;
+module.exports = router;

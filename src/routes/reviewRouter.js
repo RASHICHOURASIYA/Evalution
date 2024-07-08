@@ -7,17 +7,17 @@ const auth = require('../middleware/authMiddleware');
 
 const reviewRouter = Router();
 
-reviewRouter.get("/reviews/:bookId",auth, async (req, res)=>{
-    try{
-    const books = await Review.find({ book: req.params.bookId}).populate('customer');
-    res.send(Review);   
-    res.json({books: books});
-
-   
- }catch(err){
-    console.log(err);
-    res.status(500).send("server error");
- }
+reviewRouter.get("/:id", async (req, res) => {
+   try {
+       const review = await Review.findById(req.params.id).populate('customer');
+       if (!review) {
+           return res.status(404).json({ msg: "Review not found" });
+       }
+       res.json({ review });
+   } catch (err) {
+       console.error(err);
+       res.status(500).send("Server error");
+   }
 });
 
 //reviewRouter.get("/:id", async (req, res)=>{

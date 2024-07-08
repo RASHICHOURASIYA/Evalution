@@ -1,26 +1,31 @@
-var jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
+const Customer = require('../models/customer');
 
+const authenticate = async (req, res, next) => {
+  const token = req.header('Authorization').replace('Bearer ', '');
 
-const auth = async (req, res, next) =>{
-    const header = req.headers.authorization;
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await Customer.findByPk(decoded.id);
 
-    if(!header){
-        return res.status(400).json({
-            message:"token is not present or token is not provided",
-        });
+    if (!user) {
+      throw new Error();
     }
 
-
-    const token = req.headers.authorization.split(" ")[1];
-    jwt.verify(token, "masai", function(err, decoded){
-        if(err){
-            return res.status(400).json({message: "this is not valid token"});
-        }else{
-            req.customer = decoded;
-            next();
-        }
-    });
-
+    req.user = user;
+    next();
+  } catch (err) {
+    res.status(401).send({ error: 'Please authenticate.' });
+  }
 };
 
-module.exports = auth;
+const authorize = (roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return res.status(403).send({ error: 'Access denied.' });
+    }
+    next();
+  };
+};
+
+module.exports = { authenticate, authorize };
