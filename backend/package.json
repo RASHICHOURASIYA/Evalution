@@ -11,7 +11,8 @@
     "swagger-ui-express": "^5.0.1"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+      "build": "echo 'No build script defined'"
   },
   "name": "backend",
   "version": "1.0.0",
