@@ -10,7 +10,7 @@ const customerRoute = require('./src/routes/CustomerRouter');
 
 
 const app = express();
-const port =  8081;
+const port =  8082;
 
 app.use(express.json());
 app.use(orderRouter);
