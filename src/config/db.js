@@ -6,11 +6,12 @@ const sequelize = new Sequelize('evauser', 'root', 'rakhi9026', {
   port: 3306,
 });
 
-// Test the connection
-sequelize.authenticate().then(() => {
-  console.log('Connection has been established successfully.');
-}).catch(err => {
-  console.error('Unable to connect to the database:', err);
-});
+sequelize.authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 module.exports = sequelize;
