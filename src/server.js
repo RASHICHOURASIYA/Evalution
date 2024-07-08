@@ -1,10 +1,10 @@
 const express = require('express');
 require('dotenv').config();
 const mongoose = require('mongoose');
-const orderRouter = require('./src/routes/OrderRouter');
-const reviewRouter = require('./src/routes/reviewRouter');
-const sequelize = require('./src/config/db');
-const customerRoute = require('./src/routes/CustomerRouter');
+const orderRouter = require('./routes/OrderRouter');
+const reviewRouter = require('./routes/reviewRouter');
+const sequelize = require('./config/db');
+const customerRoute = require('./routes/CustomerRouter');
 
 
 
