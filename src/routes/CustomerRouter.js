@@ -7,11 +7,9 @@ customerRoute.post('/', async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
-   
     if (!name || !email || !password || !role) {
       return res.status(400).json({ error: 'Please provide all required fields' });
     }
-
  
     const newCustomer = await Customer.create({
       name,
@@ -19,7 +17,6 @@ customerRoute.post('/', async (req, res) => {
       password,
       role,
     });
-
   
     res.status(201).json(newCustomer);
   } catch (error) {

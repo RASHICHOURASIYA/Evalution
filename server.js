@@ -2,31 +2,24 @@ const express = require('express');
 require('dotenv').config();
 const mongoose = require('mongoose');
 const orderRouter = require('./src/routes/OrderRouter');
-const reviewRouter = require('./src/routes/reviewRouter');
+const reviewRouter = require('./src/routes/ReviewRouter');
 const sequelize = require('./src/config/db');
-const customerRoute = require('./src/routes/CustomerRouter');
-
-
-
+const customerRouter = require('./src/routes/CustomerRouter');
 
 const app = express();
-const port =  8082;
+const port = 8082;
+
 
 app.use(express.json());
-app.use(orderRouter);
-app.use(reviewRouter);
 
 
+app.use('/api/orders', orderRouter);
+app.use('/api/reviews', reviewRouter);
+app.use('/api/customers', customerRouter);
 
-
-app.get("/", (req, res)=>{
-    res.send(" this is home route");
+app.get("/", (req, res) => {
+    res.send("This is the home route");
 });
-
-
-app.use('/api/customers', customerRoute);
-
-
 
 
 mongoose.connect("mongodb+srv://bookstore:bookstore@cluster0.7szyrkr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
