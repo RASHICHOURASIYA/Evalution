@@ -5,7 +5,7 @@ const cors = require('cors');
 const sequelize = require('./src/config/db');
 const orderRouter = require('./src/routes/OrderRouter');
 const customerRoute = require('./src/routes/CustomerRouter');
-const reviewRouter = require('./src/routes/ReviewRouter');
+// const reviewRouter = require('./src/routes/ReviewRouter');
 
 const app = express();
 const port = 8083;
@@ -17,7 +17,7 @@ app.use(express.json());
 // Routes
 app.use('/api/orders', orderRouter);
 app.use('/api/customers', customerRoute);
-app.use('/api/reviews', reviewRouter);
+// app.use('/api/reviews', reviewRouter);
 
 app.get("/", (req, res) => {
   res.send("This is the home route");
